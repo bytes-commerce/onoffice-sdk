@@ -1,6 +1,9 @@
 <?php
 
+declare(strict_types=1);
 
-namespace onOffice\SDK\Exception;
+namespace BytesCommerce\OnOffice\Exception;
 
-abstract class SDKException extends \Exception { }
+use Exception;
+
+abstract class SDKException extends Exception {}

@@ -1,0 +1,17 @@
+parameters:
+    level: max
+    reportUnmatchedIgnoredErrors: false
+    parallel:
+        processTimeout: 300.0
+    paths:
+        - src
+        - tests
+    excludePaths:
+        - vendor
+        - .phpunit.cache
+        - tests/Action
+    ignoreErrors:
+        - identifier: method.alreadyNarrowedType
+        - identifier: missingType.iterableValue
+        - identifier: assign.propertyType
+        - identifier: return.type

@@ -1,0 +1,23 @@
+# IDE/Editor files
+.idea/ export-ignore
+
+# Docker development environment
+Dockerfile export-ignore
+docker-compose.yml export-ignore
+docker/ export-ignore
+
+# CI/CD workflows
+.github/ export-ignore
+
+# Development tool configurations
+phpstan.dist.neon export-ignore
+rector.php export-ignore
+ecs.php export-ignore
+phpunit.xml.dist export-ignore
+
+# Claude Code settings
+.claude/ export-ignore
+
+# Test cache
+.phpunit.cache/ export-ignore
+.phpunit.result.cache export-ignore

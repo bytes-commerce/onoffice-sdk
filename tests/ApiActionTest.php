@@ -1,127 +1,130 @@
 <?php
 
-namespace Tests\onOffice\SDK;
+declare(strict_types=1);
 
-use onOffice\SDK\internal\ApiAction;
+namespace BytesCommerce\OnOffice\Tests;
 
-class ApiActionTest extends \PHPUnit\Framework\TestCase
+use BytesCommerce\OnOffice\Internal\ApiAction;
+use PHPUnit\Framework\TestCase;
+
+final class ApiActionTest extends TestCase
 {
-	public function testDefaultCreationOfActionParameters()
-	{
-		$parameters = [
-			'param1' => 'value1',
-			[
-				'param2' => 'value2',
-				'param3' => 'value3'
-			]
-		];
+    public function testDefaultCreationOfActionParameters(): void
+    {
+        $parameters = [
+            'param1' => 'value1',
+            [
+                'param2' => 'value2',
+                'param3' => 'value3',
+            ],
+        ];
 
-		$apiAction = new ApiAction(
-			'someId',
-			'someResource',
-			$parameters
-		);
+        $apiAction = new ApiAction(
+            'someId',
+            'someResource',
+            $parameters,
+        );
 
-		$result = $apiAction->getActionParameters();
+        $result = $apiAction->getActionParameters();
 
-		$expectation = [
-			'actionid' => 'someId',
-			'identifier' => '',
-			'parameters' => [
-				'param1' => 'value1',
-				[
-					'param2' => 'value2',
-					'param3' => 'value3'
-				]
-			],
-			'resourceid' => '',
-			'resourcetype' => 'someResource',
-			'timestamp' => null,
-		];
+        $expectation = [
+            'actionid' => 'someId',
+            'identifier' => '',
+            'parameters' => [
+                0 => [
+                    'param2' => 'value2',
+                    'param3' => 'value3',
+                ],
+                'param1' => 'value1',
+            ],
+            'resourceid' => '',
+            'resourcetype' => 'someResource',
+            'timestamp' => null,
+        ];
 
-		$this->assertEquals($expectation, $result);
-	}
+        $this->assertSame($expectation, $result);
+    }
 
-	public function testDefaultIdentifier()
-	{
-		$parameters = [
-			'param1' => 'value1',
-			[
-				'param2' => 'value2',
-				'param3' => 'value3'
-			]
-		];
+    public function testDefaultIdentifier(): void
+    {
+        $parameters = [
+            'param1' => 'value1',
+            [
+                'param2' => 'value2',
+                'param3' => 'value3',
+            ],
+        ];
 
-		$apiAction = new ApiAction(
-			'someId',
-			'someResource',
-			$parameters
-		);
+        $apiAction = new ApiAction(
+            'someId',
+            'someResource',
+            $parameters,
+        );
 
-		$result = $apiAction->getIdentifier();
+        $result = $apiAction->getIdentifier();
 
-		$this->assertEquals('3e6d7c2771ea0fbda0cc93d24601b8e5', $result);
-	}
+        $this->assertSame('8c8a08db3ca981db988963cd0bdf8006', $result);
+    }
 
-	public function testCustomCreationOfActionParameters()
-	{
-		$parameters = [
-			'param1' => 'value1',
-			[
-				'param2' => 'value2',
-				'param3' => 'value3'
-			]
-		];
+    public function testCustomCreationOfActionParameters(): void
+    {
+        $parameters = [
+            'param1' => 'value1',
+            [
+                'param2' => 'value2',
+                'param3' => 'value3',
+            ],
+        ];
 
-		$apiAction = new ApiAction(
-			'someId',
-			'someResource',
-			$parameters,
-			'someResourceId',
-			'someIdentifier'
-		);
+        $apiAction = new ApiAction(
+            'someId',
+            'someResource',
+            $parameters,
+            'someResourceId',
+            'someIdentifier',
+        );
 
-		$result = $apiAction->getActionParameters();
+        $result = $apiAction->getActionParameters();
 
-		$expectation = [
-			'actionid' => 'someId',
-			'identifier' => 'someIdentifier',
-			'parameters' => [
-				'param1' => 'value1',
-				[
-					'param2' => 'value2',
-					'param3' => 'value3'
-				]
-			],
-			'resourceid' => 'someResourceId',
-			'resourcetype' => 'someResource',
-			'timestamp' => null,
-		];
+        $expectation = [
+            'actionid' => 'someId',
+            'identifier' => 'someIdentifier',
+            'parameters' => [
+                0 => [
+                    'param2' => 'value2',
+                    'param3' => 'value3',
+                ],
+                'param1' => 'value1',
+            ],
+            'resourceid' => 'someResourceId',
+            'resourcetype' => 'someResource',
+            'timestamp' => null,
+        ];
 
-		$this->assertEquals($expectation, $result);
-	}
+        $this->assertSame($expectation, $result);
+    }
 
-	public function testCustomIdentifier()
-	{
-		$parameters = [
-			'param1' => 'value1',
-			[
-				'param2' => 'value2',
-				'param3' => 'value3'
-			]
-		];
+    public function testCustomIdentifier(): void
+    {
+        $parameters = [
+            'param1' => 'value1',
+            [
+                'param2' => 'value2',
+                'param3' => 'value3',
+            ],
+        ];
 
-		$apiAction = new ApiAction(
-			'someId',
-			'someResource',
-			$parameters,
-			'someResourceId',
-			'someIdentifier',
-			123
-		);
+        $apiAction = new ApiAction(
+            'someId',
+            'someResource',
+            $parameters,
+            'someResourceId',
+            'someIdentifier',
+            123,
+        );
 
-		$result = $apiAction->getIdentifier();
+        $result = $apiAction->getIdentifier();
 
-		$this->assertEquals('8e09009ce91b383e5c169dc78c24e322', $result);
-	}
+        $this->assertSame('792d0a7688b6cc242cab01ed52f2f949', $result);
+    }
 }

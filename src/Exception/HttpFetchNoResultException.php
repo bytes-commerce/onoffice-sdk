@@ -1,28 +1,20 @@
 <?php
 
-namespace onOffice\SDK\Exception;
+declare(strict_types=1);
+
+namespace BytesCommerce\OnOffice\Exception;
 
 class HttpFetchNoResultException extends SDKException
 {
-	/** @var int */
-	private $_curlErrno = null;
+    private int $curlErrno = 0;
 
+    public function getCurlErrno(): int
+    {
+        return $this->curlErrno;
+    }
 
-	/**
-	 * @return int
-	 */
-
-	public function getCurlErrno()
-	{
-		return $this->_curlErrno;
-	}
-
-	/**
-	 * @param int $errno
-	 */
-
-	public function setCurlErrno($errno)
-	{
-		$this->_curlErrno = $errno;
-	}
+    public function setCurlErrno(int $errno): void
+    {
+        $this->curlErrno = $errno;
+    }
 }
