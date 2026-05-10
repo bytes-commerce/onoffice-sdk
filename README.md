@@ -1,6 +1,6 @@
 # onOffice SDK
 
-[![PHP Composer](https://github.com/onOfficeGmbH/sdk/actions/workflows/php.yml/badge.svg)](https://github.com/onOfficeGmbH/sdk/actions/workflows/php.yml)
+[![CI](https://github.com/bytes-commerce/onoffice-sdk/actions/workflows/php.yml/badge.svg)](https://github.com/bytes-commerce/onoffice-sdk/actions/workflows/php.yml)
 [![PHP Version](https://img.shields.io/badge/PHP-8.4+-blue)](https://www.php.net/)
 [![License](https://img.shields.io/badge/license-MIT-green)](LICENSE)
 
