@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * Calendar (Appointment) Examples
  *
@@ -28,8 +30,8 @@ $response = $calendarAction->create([
         'ganztags' => false,
 
         // Notes
-        'note' => 'Prospect is interested in the Berlin property (ID: 608). ' .
-                  'Show them the garden and the newly renovated kitchen.',
+        'note' => 'Prospect is interested in the Berlin property (ID: 608). '
+                  . 'Show them the garden and the newly renovated kitchen.',
 
         // Visibility
         'private' => false,
@@ -37,7 +39,7 @@ $response = $calendarAction->create([
     ],
 
     // Related records
-    'relatedAddressIds' => [1935, 1931], // Multiple contacts
+    'relatedAddressIds' => [1_935, 1_931], // Multiple contacts
     'relatedEstateId' => 608,
 
     // Location
@@ -51,7 +53,7 @@ $response = $calendarAction->create([
 ]);
 
 echo "Appointment created successfully!\n";
-echo "New Calendar ID: " . ($response['data']['id'] ?? 'unknown') . "\n";
+echo 'New Calendar ID: ' . ($response['data']['id'] ?? 'unknown') . "\n";
 print_r($response);
 
 // Example 2: Create an all-day event

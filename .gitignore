@@ -1,3 +1,7 @@
 /vendor/
 CLAUDE.md
 .idea/
+.DS_Store
+.phpunit.cache/
+var/
+.env

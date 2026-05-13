@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * Address Creation Example
  *
@@ -50,5 +52,5 @@ $response = $addressAction->create([
 ]);
 
 echo "Address created successfully!\n";
-echo "New Address ID: " . ($response['data']['id'] ?? 'unknown') . "\n";
+echo 'New Address ID: ' . ($response['data']['id'] ?? 'unknown') . "\n";
 print_r($response);

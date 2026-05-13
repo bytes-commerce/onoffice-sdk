@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * Address Reading Examples
  *
@@ -20,7 +22,7 @@ echo "=== Read specific addresses by ID ===\n";
 
 $response = $addressAction->read([
     'data' => ['Id', 'Vorname', 'Name', 'Email', 'Telefon'],
-    'recordids' => [10505, 10509],
+    'recordids' => [10_505, 10_509],
 ]);
 
 print_r($response);

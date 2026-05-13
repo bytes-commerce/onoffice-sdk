@@ -8,10 +8,11 @@ use BytesCommerce\OnOffice\Action\ActionBase;
 use BytesCommerce\OnOffice\Action\ActionInterface;
 use BytesCommerce\OnOffice\Api;
 use InvalidArgumentException;
+use SensitiveParameter;
 
 final class ActionFactory
 {
-    public function create(string $actionClass, string $token, string $secret, ?Api $sdk = null): ActionInterface
+    public function create(string $actionClass, #[SensitiveParameter] string $token, #[SensitiveParameter] string $secret, ?Api $sdk = null): ActionInterface
     {
         if (!is_subclass_of($actionClass, ActionBase::class)) {
             throw new InvalidArgumentException(

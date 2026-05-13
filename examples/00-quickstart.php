@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * Quickstart Example - Read Estates
  *
@@ -32,4 +34,4 @@ $response = $sdk->getEstateAction()->read([
 ]);
 
 echo "Estates retrieved successfully!\n";
-echo "Number of records: " . count($response['data']['records'] ?? []) . "\n";
+echo 'Number of records: ' . count($response['data']['records'] ?? []) . "\n";

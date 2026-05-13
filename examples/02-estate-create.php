@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * Estate Creation Example
  *
@@ -25,14 +27,14 @@ $response = $estateAction->create([
         'objekttyp' => 'einfamilienhaus',
 
         // Location
-        'plz' => 52068,
+        'plz' => 52_068,
         'ort' => 'Aachen',
         'land' => 'DEU',
         'strasse' => 'Hauptstrasse 123',
         'hausnummer' => '123',
 
         // Price
-        'kaufpreis' => 350000,
+        'kaufpreis' => 350_000,
         'kaufpreis_pro_flaeche' => 0,
         'mietpreis' => 0,
         'nebenkosten' => 0,
@@ -44,7 +46,7 @@ $response = $estateAction->create([
         'anzahl_zimmer' => 5,
         'anzahl_schlafzimmer' => 3,
         'anzahl_badezimmer' => 2,
-        'baujahr' => 2015,
+        'baujahr' => 2_015,
         'zustand' => 'neuwertig',
         'barrierefrei' => true,
         'wg_geeignet' => false,
@@ -69,5 +71,5 @@ $response = $estateAction->create([
 ]);
 
 echo "Estate created successfully!\n";
-echo "New Estate ID: " . ($response['data']['id'] ?? 'unknown') . "\n";
+echo 'New Estate ID: ' . ($response['data']['id'] ?? 'unknown') . "\n";
 print_r($response);

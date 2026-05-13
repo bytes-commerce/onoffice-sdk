@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * Batch Operations Example
  *
@@ -19,13 +21,13 @@ $sdk = new Api('YOUR_API_TOKEN', 'YOUR_API_SECRET');
 $handle1 = $sdk->callGeneric(
     Api::ACTION_ID_READ,
     Api::MODULE_ESTATE,
-    ['data' => ['Id', 'kaufpreis'], 'recordids' => [1, 2, 3]]
+    ['data' => ['Id', 'kaufpreis'], 'recordids' => [1, 2, 3]],
 );
 
 $handle2 = $sdk->callGeneric(
     Api::ACTION_ID_READ,
     Api::MODULE_ADDRESS,
-    ['data' => ['Id', 'Name', 'Email'], 'recordids' => [100, 101]]
+    ['data' => ['Id', 'Name', 'Email'], 'recordids' => [100, 101]],
 );
 
 $handle3 = $sdk->call(
@@ -33,7 +35,7 @@ $handle3 = $sdk->call(
     '123',
     '',
     Api::MODULE_ESTATE,
-    ['data' => ['kaufpreis' => 350000]]
+    ['data' => ['kaufpreis' => 350_000]],
 );
 
 // Send all requests in a single HTTP call
@@ -45,8 +47,8 @@ $addresses = $sdk->getResponseArray($handle2);
 $modifyResult = $sdk->getResponseArray($handle3);
 
 echo "Batch operation completed!\n";
-echo "Estates retrieved: " . count($estates['data']['records'] ?? []) . "\n";
-echo "Addresses retrieved: " . count($addresses['data']['records'] ?? []) . "\n";
+echo 'Estates retrieved: ' . count($estates['data']['records'] ?? []) . "\n";
+echo 'Addresses retrieved: ' . count($addresses['data']['records'] ?? []) . "\n";
 print_r($estates);
 print_r($addresses);
 print_r($modifyResult);

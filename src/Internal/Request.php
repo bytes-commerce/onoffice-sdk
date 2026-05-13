@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace BytesCommerce\OnOffice\Internal;
 
+use SensitiveParameter;
 use Webmozart\Assert\Assert;
 
 final class Request implements RequestInterface
@@ -20,7 +21,7 @@ final class Request implements RequestInterface
     }
 
     /** @return array<string, mixed> */
-    public function createRequest(string $token, string $secret): array
+    public function createRequest(#[SensitiveParameter] string $token, #[SensitiveParameter] string $secret): array
     {
         $actionParameters = $this->pApiAction->getActionParameters();
 
@@ -52,7 +53,7 @@ final class Request implements RequestInterface
         return $this->pApiAction;
     }
 
-    private function createHmac2(string $token, string $secret, int $timestamp, string $type, string $actionId): string
+    private function createHmac2(#[SensitiveParameter] string $token, #[SensitiveParameter] string $secret, int $timestamp, string $type, string $actionId): string
     {
         $fields = [
             'timestamp' => $timestamp,

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * Email Examples
  *
@@ -29,7 +31,7 @@ $response = $emailAction->send([
 
     // Email content
     'subject' => 'Property Viewing Confirmation',
-    'templateid' => 1211, // Use a saved template instead of body
+    'templateid' => 1_211, // Use a saved template instead of body
     'replyto' => 'reply@example.com',
 
     // Related records

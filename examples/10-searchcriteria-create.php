@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * Search Criteria Examples
  *
@@ -46,13 +48,13 @@ $response = $searchAction->create([
         'anzahl_zimmer__von' => '3',
 
         // Additional notes
-        'krit_bemerkung' => 'Interested in quiet neighborhoods with good public transport connection. ' .
-                           'Garden is a must. No basement preferred.',
+        'krit_bemerkung' => 'Interested in quiet neighborhoods with good public transport connection. '
+                           . 'Garden is a must. No basement preferred.',
     ],
 ]);
 
 echo "Search criteria created successfully!\n";
-echo "New Search Criteria ID: " . ($response['data']['id'] ?? 'unknown') . "\n";
+echo 'New Search Criteria ID: ' . ($response['data']['id'] ?? 'unknown') . "\n";
 print_r($response);
 
 // Example 2: Create search criteria for rentals

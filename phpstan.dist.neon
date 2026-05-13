@@ -10,8 +10,3 @@ parameters:
         - vendor
         - .phpunit.cache
         - tests/Action
-    ignoreErrors:
-        - identifier: method.alreadyNarrowedType
-        - identifier: missingType.iterableValue
-        - identifier: assign.propertyType
-        - identifier: return.type

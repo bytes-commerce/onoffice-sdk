@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * File Management Examples
  *
@@ -35,7 +37,7 @@ echo "\n=== Modify file metadata ===\n";
 
 $response = $fileAction->modify('2983', [
     'relationtype' => 'estate',
-    'parentid' => 1685,
+    'parentid' => 1_685,
     'Art' => 'Foto',
     'title' => 'Updated Title',
     'freitext' => 'Updated description for the image',

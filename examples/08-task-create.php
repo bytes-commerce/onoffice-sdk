@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * Task (To-Do) Examples
  *
@@ -46,7 +48,7 @@ $response = $taskAction->create([
 ]);
 
 echo "Task created successfully!\n";
-echo "New Task ID: " . ($response['data']['id'] ?? 'unknown') . "\n";
+echo 'New Task ID: ' . ($response['data']['id'] ?? 'unknown') . "\n";
 print_r($response);
 
 // Example 2: Create a simple reminder

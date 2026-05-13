@@ -1,0 +1,11 @@
+parameters:
+    level: 6
+    reportUnmatchedIgnoredErrors: false
+    parallel:
+        processTimeout: 300.0
+    paths:
+        - tests
+    excludePaths:
+        - vendor
+        - .phpunit.cache
+        - tests/Action

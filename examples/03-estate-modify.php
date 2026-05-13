@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * Estate Modification Example
  *
@@ -19,7 +21,7 @@ $estateAction = $sdk->getEstateAction();
 $response = $estateAction->modify('123', [
     'data' => [
         // Update price
-        'kaufpreis' => 375000,
+        'kaufpreis' => 375_000,
 
         // Update status (1=Active, 2=Pending, 0=Archived)
         'status' => 2,

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * Estate Quick Search Example
  *
@@ -52,7 +54,7 @@ $response = $estateAction->quickSearch([
             ['op' => '=', 'val' => 'miete'],
         ],
         'mietpreis__bis' => [
-            ['op' => '<=', 'val' => 1000],
+            ['op' => '<=', 'val' => 1_000],
         ],
     ],
     'sortby' => 'mietpreis',

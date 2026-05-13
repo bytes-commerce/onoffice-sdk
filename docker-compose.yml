@@ -6,19 +6,12 @@ services:
     container_name: onoffice-sdk
     volumes:
       - .:/app
-      - php-cache:/app/var/cache
-      - rector-cache:/app/rector/var/cache
-      - phpunit-cache:/app/.phpunit.cache
     working_dir: /app
     environment:
+      MEMORY_LIMIT: -1
       XDEBUG_MODE: debug
       XDEBUG_CLIENT_HOST: host.docker.internal
       XDEBUG_START_WITH_REQUEST: yes
       PHP_IDE_CONFIG: serverName=onoffice-sdk
     extra_hosts:
       - "host.docker.internal:host-gateway"
-
-volumes:
-  php-cache:
-  rector-cache:
-  phpunit-cache:

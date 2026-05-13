@@ -24,7 +24,7 @@ COPY composer.json composer.lock* ./
 
 # Install dependencies (including dev tools)
 # Use composer update to get latest versions matching composer.json constraints
-RUN composer update --optimize-autoloader
+#RUN composer install
 
 # Copy application code
 COPY . .

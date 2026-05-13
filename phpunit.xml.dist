@@ -19,5 +19,10 @@
         <include>
             <directory>./src/</directory>
         </include>
+        <exclude>
+            <directory>examples/</directory>
+            <directory>./src/Attributes/Estate/</directory>
+            <directory>./src/Attributes/Enum/</directory>
+        </exclude>
     </source>
 </phpunit>

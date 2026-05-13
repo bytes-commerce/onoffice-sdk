@@ -4,9 +4,9 @@
 [![PHP Version](https://img.shields.io/badge/PHP-8.4+-blue)](https://www.php.net/)
 [![License](https://img.shields.io/badge/license-MIT-green)](LICENSE)
 
-Official PHP API client library for [onOffice](https://www.onoffice.de/) - the all-in-one CRM solution for the real estate industry.
+Inofficial PHP API client library for [onOffice](https://www.onoffice.de/) - for PHP 8.4.
 
-**Developed and maintained by [bytes-commerce.de](https://www.bytes-commerce.de)**
+**Developed by [www.bytes-commerce.de](https://www.bytes-commerce.de)**
 
 ---
 
@@ -20,7 +20,8 @@ composer require bytes-commerce/onoffice-sdk
 
 ## Overview
 
-The onOffice SDK provides a lightweight, easy-to-use PHP library for interacting with the onOffice API. It enables you to:
+The onOffice SDK provides a lightweight, easy-to-use PHP library for interacting with the onOffice API. It enables you
+to:
 
 - **Manage Estates** - Create, read, update, and delete property listings
 - **Manage Addresses** - Handle contacts, leads, and customers
@@ -30,6 +31,38 @@ The onOffice SDK provides a lightweight, easy-to-use PHP library for interacting
 - **Manage Files** - Upload and organize property documents and images
 - **Manage Relations** - Link addresses to estates (owners, prospects, etc.)
 - **Send Emails** - Send templated emails with attachments
+
+## Key Features
+
+### Typed DTOs
+
+Work with strongly-typed objects instead of raw arrays. Convert API responses directly to `EstateDTO` or `AddressDTO`:
+
+```php
+$factory = new EstateDTOFactory();
+$estates = $factory->fromRecords($response['data']['records']);
+
+foreach ($estates as $estate) {
+    echo $estate->objekttitel;
+    echo $estate->lage;
+    echo $estate->isForRent() ? 'For Rent' : 'For Sale';
+}
+```
+
+### Automatic Pagination
+
+Fetch all estates without manual pagination handling:
+
+```php
+$allEstates = $sdk->getEstateAction()->getAllEstates(
+    sortBy: ['geaendert_am' => 'DESC'],
+    filter: ['vermarktungsart' => [['op' => '=', 'val' => 'kauf']]]
+);
+```
+
+### Type-Safe Field Mapping
+
+Use `EstateAttributeMapper` to validate and map API field names to strongly-typed attributes. Never guess field names again.
 
 ---
 
@@ -51,7 +84,10 @@ require_once 'vendor/autoload.php';
 use BytesCommerce\OnOffice\Api;
 
 // Initialize SDK with your API credentials
-$sdk = new Api('YOUR_API_TOKEN', 'YOUR_API_SECRET');
+$apiToken = getenv('ONOFFICE_API_TOKEN') ?: throw new RuntimeException('ONOFFICE_API_TOKEN not set');
+$apiSecret = getenv('ONOFFICE_API_SECRET') ?: throw new RuntimeException('ONOFFICE_API_SECRET not set');
+
+$sdk = new Api($apiToken, $apiSecret);
 
 // Get an action - no need to pass credentials to individual actions
 $response = $sdk->getEstateAction()->read([
@@ -66,10 +102,11 @@ print_r($response);
 
 ## Usage Pattern
 
-The SDK uses a factory pattern for action classes. Initialize the SDK once with your credentials, then get action instances as needed:
+The SDK uses a factory pattern for action classes. Initialize the SDK once with your credentials, then get action
+instances as needed:
 
 ```php
-$sdk = new onOfficeSDK('token', 'secret');
+$sdk = new Api($apiToken, $apiSecret);
 
 // Get action instances - credentials are already set
 $estateAction = $sdk->getEstateAction();
@@ -87,7 +124,7 @@ $taskAction = $sdk->getTaskAction();
 ```php
 use BytesCommerce\OnOffice\Api;
 
-$sdk = new Api($token, $secret);
+$sdk = new Api($apiToken, $apiSecret);
 
 // Read estates
 $response = $sdk->getEstateAction()->read([
@@ -114,6 +151,14 @@ $response = $sdk->getEstateAction()->modify('123', [
 
 // Quick search
 $response = $sdk->getEstateAction()->quickSearch(['input' => 'Berlin']);
+
+// Get all estates with automatic pagination
+$estates = $sdk->getEstateAction()->getAllEstates(
+    sortBy: ['geaendert_am' => 'DESC']
+);
+
+// Get estate images
+$images = $sdk->getEstateAction()->getEstateImages(123);
 ```
 
 ### Address Operations
@@ -173,7 +218,7 @@ The SDK supports batching multiple requests for optimal performance:
 ```php
 use BytesCommerce\OnOffice\Api;
 
-$sdk = new Api($token, $secret);
+$sdk = new Api($apiToken, $apiSecret);
 
 // Queue multiple requests
 $handle1 = $sdk->callGeneric(
@@ -202,22 +247,52 @@ $addresses = $sdk->getResponseArray($handle2);
 
 The SDK provides getter methods for each resource type:
 
-| Method | Module | Description |
-|--------|--------|-------------|
-| `getEstateAction()` | `estate` | read, create, modify, delete, quickSearch |
-| `getAddressAction()` | `address` | read, create, modify, delete, autocomplete |
-| `getTaskAction()` | `task` | read, create, modify, delete |
-| `getCalendarAction()` | `calendar` | read, create, modify, delete |
-| `getSearchCriteriaAction()` | `searchcriteria` | read, create, modify, delete |
-| `getFileAction()` | `file` | create, modify, delete, upload |
-| `getRelationAction()` | `relations` | create, modify, delete, getRelations |
-| `getEmailAction()` | `sendmail` | send |
+| Method                      | Module           | Description                                                               |
+|-----------------------------|------------------|---------------------------------------------------------------------------|
+| `getEstateAction()`         | `estate`         | read, create, modify, delete, quickSearch, getAllEstates, getEstateImages |
+| `getAddressAction()`        | `address`        | read, create, modify, delete, autocomplete                                |
+| `getTaskAction()`           | `task`           | read, create, modify, delete                                              |
+| `getCalendarAction()`       | `calendar`       | read, create, modify, delete                                              |
+| `getSearchCriteriaAction()` | `searchcriteria` | read, create, modify, delete                                              |
+| `getFileAction()`           | `file`           | create, modify, delete, upload                                            |
+| `getRelationAction()`       | `relations`      | create, modify, delete, getRelations                                      |
+| `getEmailAction()`          | `sendmail`       | send                                                                      |
+
+---
+
+## Data Transfer Objects (DTOs)
+
+The SDK provides typed DTOs for convenient data handling:
+
+```php
+use BytesCommerce\OnOffice\DTO\Estate\EstateDTO;
+use BytesCommerce\OnOffice\DTO\Estate\EstateDTOFactory;
+
+// Fetch estates
+$response = $sdk->getEstateAction()->read(['data' => ['Id', 'objekttitel', 'lage'], 'listlimit' => 10]);
+
+// Convert to typed DTOs
+$factory = new EstateDTOFactory();
+$estates = $factory->fromRecords($response['data']['records']);
+
+foreach ($estates as $estate) {
+    echo $estate->objekttitel;
+    echo $estate->lage;
+    echo $estate->getFormattedAddress();
+}
+```
+
+Available DTOs:
+
+- `EstateDTO` / `EstateDTOFactory` - Typed estate objects
+- `AddressDTO` / `AddressDTOFactory` - Typed address objects
 
 ---
 
 ## API Documentation
 
 For detailed API documentation, visit:
+
 - [Official API Documentation](https://apidoc.onoffice.de/)
 - [API Reference](https://apidoc.onoffice.de/api-reference/)
 
@@ -242,6 +317,15 @@ The `examples/` directory contains comprehensive examples:
 - `12-relation-create.php` - Managing relations
 - `13-email-send.php` - Sending emails
 - `14-batch-operations.php` - Batch operations
+- `15-estate-dto-poc.php` - Estate DTO example
+- `16-address-dto-poc.php` - Address DTO example
+- `17-estate-getall-pagination.php` - Pagination with getAllEstates()
+
+Run examples inside Docker:
+
+```bash
+docker compose exec php bash -c "ONOFFICE_API_TOKEN=xxx ONOFFICE_API_SECRET=yyy php examples/00-quickstart.php"
+```
 
 ---
 

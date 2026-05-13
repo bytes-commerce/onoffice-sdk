@@ -16,6 +16,8 @@ use BytesCommerce\OnOffice\Action\TaskAction;
 use BytesCommerce\OnOffice\Cache\cacheInterface;
 use BytesCommerce\OnOffice\Factory\ActionFactory;
 use BytesCommerce\OnOffice\Internal\ApiCall;
+use BytesCommerce\OnOffice\Internal\HttpFetch;
+use SensitiveParameter;
 
 class Api implements ApiInterface
 {
@@ -31,7 +33,9 @@ class Api implements ApiInterface
     private array $actionCache = [];
 
     public function __construct(
+        #[SensitiveParameter]
         string $token,
+        #[SensitiveParameter]
         string $secret,
         ?ApiCall $apiCall = null,
     ) {
@@ -77,17 +81,26 @@ class Api implements ApiInterface
     /**
      * @throws Exception\HttpFetchNoResultException
      */
-    public function sendRequests(string $token, string $secret): void
-    {
-        $this->apiCall->sendRequests($token, $secret);
+    public function sendRequests(
+        #[SensitiveParameter]
+        string $token,
+        #[SensitiveParameter]
+        string $secret,
+        ?HttpFetch $httpFetch = null,
+        bool $saveToCache = true,
+        ?string $claim = null,
+    ): void {
+        $this->apiCall->sendRequests($token, $secret, $httpFetch, $saveToCache, $claim);
     }
 
     /**
      * @throws Exception\HttpFetchNoResultException
      */
-    public function sendRequestsWithCredentials(): void
-    {
-        $this->apiCall->sendRequests($this->token, $this->secret);
+    public function sendRequestsWithCredentials(
+        bool $saveToCache = true,
+        ?string $claim = null,
+    ): void {
+        $this->apiCall->sendRequests($this->token, $this->secret, null, $saveToCache, $claim);
     }
 
     /**
@@ -183,12 +196,14 @@ class Api implements ApiInterface
     {
         if (!isset($this->actionCache[$actionClass])) {
             $sdk = new self($this->token, $this->secret, $this->apiCall);
-            $this->actionCache[$actionClass] = $this->actionFactory->create(
+            /** @var T */
+            $action = $this->actionFactory->create(
                 $actionClass,
                 $this->token,
                 $this->secret,
                 $sdk,
             );
+            $this->actionCache[$actionClass] = $action;
         }
 
         return $this->actionCache[$actionClass];

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * Estate Reading Examples
  *
@@ -32,7 +34,7 @@ $response = $estateAction->read([
     'data' => ['Id', 'kaufpreis', 'ort', 'plz', 'status'],
     'filter' => [
         'kaufpreis' => [
-            ['op' => '>', 'val' => 300000],
+            ['op' => '>', 'val' => 300_000],
         ],
         'status' => [
             ['op' => '=', 'val' => 1], // 1 = Active
@@ -72,10 +74,10 @@ $response = $estateAction->read([
             ['op' => '=', 'val' => 'haus'],
         ],
         'kaufpreis__von' => [
-            ['op' => '>=', 'val' => 200000],
+            ['op' => '>=', 'val' => 200_000],
         ],
         'kaufpreis__bis' => [
-            ['op' => '<=', 'val' => 500000],
+            ['op' => '<=', 'val' => 500_000],
         ],
         'wohnflaeche__von' => [
             ['op' => '>=', 'val' => 100],

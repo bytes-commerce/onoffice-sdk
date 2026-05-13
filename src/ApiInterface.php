@@ -13,6 +13,7 @@ use BytesCommerce\OnOffice\Action\RelationAction;
 use BytesCommerce\OnOffice\Action\SearchCriteriaAction;
 use BytesCommerce\OnOffice\Action\TaskAction;
 use BytesCommerce\OnOffice\Cache\cacheInterface;
+use BytesCommerce\OnOffice\Internal\HttpFetch;
 
 interface ApiInterface
 {
@@ -45,6 +46,8 @@ interface ApiInterface
     public const string MODULE_ADDRESS = 'address';
 
     public const string MODULE_ESTATE = 'estate';
+
+    public const string MODULE_ESTATE_PICTURES = 'estatepictures';
 
     public const string MODULE_SEARCHCRITERIA = 'searchcriteria';
 
@@ -156,12 +159,21 @@ interface ApiInterface
     /**
      * @throws Exception\HttpFetchNoResultException
      */
-    public function sendRequests(string $token, string $secret): void;
+    public function sendRequests(
+        string $token,
+        string $secret,
+        ?HttpFetch $httpFetch = null,
+        bool $saveToCache = true,
+        ?string $claim = null,
+    ): void;
 
     /**
      * @throws Exception\HttpFetchNoResultException
      */
-    public function sendRequestsWithCredentials(): void;
+    public function sendRequestsWithCredentials(
+        bool $saveToCache = true,
+        ?string $claim = null,
+    ): void;
 
     /**
      * @throws Exception\ApiCallFaultyResponseException
